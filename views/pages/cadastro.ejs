@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include("../partials/head") %>
+<body>
+
+    Página cadastro
+    <br>
+    <main>
+        <form action="/cadastro" method="post" class="formItens">
+            Seu nome:
+            <input type="text" name="username" id="username" placeholder="Digite seu nome de usuário"><br>
+            Senha:
+            <input type="password" name="password" id="senha" placeholder="Digite sua senha"><br>
+            <button type="submit">Entrar</button>
+        </form>
+    </main>
+    <br>
+    <a href="/login">login</a>
+    <%- include ("../partials/footer") %>
+    <%- include ("../partials/menu") %>
+
+    
+
+</body>
+</html>
