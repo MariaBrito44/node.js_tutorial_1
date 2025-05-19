@@ -1,0 +1,24 @@
+<table width="100%">
+    <thead></thead>
+    <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Senha</th>
+    </tr>
+    <tbody>
+    <% let i;for(i=0; i<=10; i++ ) { %>
+    <tr>
+        <td><%= i %></td>
+        <td><%dados.username %></td>
+        <td><%dados.password %></td>
+    </tr>
+        <%} %>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3">
+                <%= `Quantidade de registros ${i}` %>
+            </td>
+        </tr>
+    </tfoot>
+</table>
