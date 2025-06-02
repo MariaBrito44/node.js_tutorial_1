@@ -2,8 +2,13 @@
     <nav>
        <a href="/"><img src='./static/senai.png' width="200"></a>
        <a href="/sobre"><img src='./static/sobre.jpg' width="200"></a>
-       <a href="/cadastro"><img src='./static/cadastro.png' width="200"></a>
-       <a href="/login"><img src='./static/login.png' width="200"></a>
-       <a href="/dashboard"><img src='./static/dash.jpg' width="200"></a>
+
+       <% if (!req.session.loggedin) { %>
+            <a href="/cadastro"><img src='./static/cadastro.png' width="200"></a>
+            <a href="/login"><img src='./static/login.png' width="200"></a>
+       <% } else { %>
+            <a href="/dashboard"><img src='./static/dash.jpg' width="200"></a>
+            <a href="/logout"><img src='./static/logout.png' width="200"></a>
+       <% } %>
     </nav>
 </header>
