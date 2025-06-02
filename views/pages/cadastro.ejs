@@ -1,8 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
-    <%- include("../partials/head") %>
+<html lang="pt-BR">
+  <%- include("../partials/head") %>
 <body>
+  <%- include("../partials/menu") %>
 
+<<<<<<< HEAD
+  <div class="page-box">
+    <h1>Cadastre-se</h1>
+    <main>
+      <form action="/cadastro" method="POST" class="formItens">
+        <input type="text" name="username" id="username" placeholder="Digite seu nome de usuário" required>
+        <input type="password" name="password" id="senha" placeholder="Digite sua senha" required>
+        <button type="submit">CADASTRAR</button>
+        <a href="/login" style="text-decoration: none;" class="button-link">Já tenho cadastro</a> 
+      </form>
+    </main>
+  </div>
+=======
     Página de Cadastro
     <br>
     <main>
@@ -19,6 +33,8 @@
     <%- include ("../partials/menu") %>
 
     
+>>>>>>> ab63cf34b937827813e664a6990811a1a24a2d6a
 
+  <%- include("../partials/footer") %>
 </body>
 </html>
