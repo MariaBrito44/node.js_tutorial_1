@@ -124,6 +124,7 @@ nav a:hover img {
   border-color: #800000; /* Muda a cor da borda */
   background-color: #fbeaea; /* Muda o fundo */
   box-shadow: 0 0 5px rgba(128, 0, 0, 0.7); /* Sombra de destaque */
+<<<<<<< HEAD
 }
 
 /* Estilo do botão */
@@ -145,6 +146,25 @@ button, a[type="submit"], a.button-link  {
   }
 }
 
+=======
+}
+
+/* Estilo do botão */
+.formItens button {
+  padding: 16px; /* Espaçamento interno */
+  border: none; /* Remove a borda */
+  border-radius: 12px; /* Bordas arredondadas */
+  background-color: #800000; /* Cor de fundo vermelho escuro */
+  color: white; /* Cor do texto */
+  font-size: 18px; /* Tamanho da fonte */
+  font-weight: 700; /* Negrito */
+  cursor: pointer; /* Muda o cursor para indicar que é clicável */
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Transições suaves */
+  letter-spacing: 1px; /* Espaçamento entre letras */
+  box-shadow: 0 4px 10px rgba(128, 0, 0, 0.2); /* Sombra para profundidade */
+}
+
+>>>>>>> ab63cf34b937827813e664a6990811a1a24a2d6a
 /* Efeito ao passar o mouse no botão */
 .formItens button:hover {
   background-color: #660000; /* Cor de fundo mais escura */
@@ -178,6 +198,7 @@ p {
   margin-bottom: 20px; /* Espaçamento inferior */
 }
 
+<<<<<<< HEAD
 .footer {
   position: sticky;
   background-color: #990000;
@@ -215,5 +236,16 @@ p {
   margin-bottom: 10px;
   font-weight: bold;
   text-decoration: underline;
+=======
+/* Estilo do rodapé */
+footer {
+  width: 100%; /* Ocupa toda a largura */
+  background-color: #f1f1f1; /* Fundo claro */
+  border-top: 1px solid #ddd; /* Linha divisória no topo */
+  text-align: center; /* Centraliza o texto */
+  padding: 16px; /* Espaçamento interno */
+  font-size: 14px; /* Tamanho pequeno */
+  color: #555; /* Cor cinza escura */
+>>>>>>> ab63cf34b937827813e664a6990811a1a24a2d6a
 }
 
