@@ -130,7 +130,6 @@ app.get("/logout", (req, res) => {
   });
 });
 
-<<<<<<< HEAD
 // Página de cadastro - GET
 app.get("/cadastro", (req, res) => {
   console.log("GET /cadastro");
@@ -143,40 +142,17 @@ app.get("/cadastro", (req, res) => {
 });
 
 // POST para cadastro com validação
-=======
-// Página de cadastro - envia vazio para formulário
-app.get("/cadastro", (req, res) => {
-  console.log("GET /cadastro");
-  res.render("pages/cadastro", { titulo: "Cadastro", req: req, errors: null, data: {} });
-});
-
-// POST para cadastro com validação e sanitização
->>>>>>> ab63cf34b937827813e664a6990811a1a24a2d6a
 app.post(
   "/cadastro",
   [
     body("username")
       .trim()
-<<<<<<< HEAD
       .notEmpty().withMessage("Nome de usuário obrigatório")
       .isAlphanumeric().withMessage("Nome de usuário deve ser alfanumérico")
       .escape(),
     body("password")
       .trim()
       .notEmpty().withMessage("Senha obrigatória")
-=======
-      .notEmpty()
-      .withMessage("Nome de usuário obrigatório")
-      .isAlphanumeric()
-      .withMessage("Nome de usuário deve ser alfanumérico")
-      .escape(),
-    body("password")
-      .trim()
-      .notEmpty()
-      .withMessage("Senha obrigatória")
-      .isLength({ min: 6 })
-      .withMessage("Senha deve ter ao menos 6 caracteres")
->>>>>>> ab63cf34b937827813e664a6990811a1a24a2d6a
       .escape(),
   ],
   (req, res, next) => {
@@ -184,27 +160,13 @@ app.post(
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-<<<<<<< HEAD
-=======
-      // Se tem erro na validação, renderiza a página cadastro com os erros e dados preenchidos
->>>>>>> ab63cf34b937827813e664a6990811a1a24a2d6a
       return res.render("pages/cadastro", {
         titulo: "Cadastro",
         errors: errors.array(),
         data: req.body,
-<<<<<<< HEAD
         req: req
       });
     }
-=======
-        req: req,
-      });
-    }
-
-    const { username, password } = req.body;
-
-    const query = "SELECT * FROM users WHERE username=?";
->>>>>>> ab63cf34b937827813e664a6990811a1a24a2d6a
 
     const { username, password } = req.body;
 
@@ -214,28 +176,19 @@ app.post(
 
       if (row) {
         console.log(`Usuário: ${username} já cadastrado`);
-<<<<<<< HEAD
         return res.redirect("/cadastro_invalido");
-=======
-        return res.redirect("/Cadastrado");
->>>>>>> ab63cf34b937827813e664a6990811a1a24a2d6a
       }
 
       const insert = "INSERT INTO users (username, password) VALUES (?, ?)";
       db.run(insert, [username, password], (err) => {
         if (err) return next(err);
         console.log(`Usuário: ${username} cadastrado com sucesso.`);
-<<<<<<< HEAD
         res.redirect("/cadastro_sucesso");
-=======
-        res.redirect("/sucesso");
->>>>>>> ab63cf34b937827813e664a6990811a1a24a2d6a
       });
     });
   }
 );
 
-<<<<<<< HEAD
 // Páginas de feedback
 app.get("/cadastro_invalido", (req, res) => {
   res.render("pages/cadastro_invalido", { titulo: "Erro no Cadastro", req: req });
@@ -246,18 +199,6 @@ app.get("/cadastro_sucesso", (req, res) => {
 });
 
 
-=======
-// Página avisando que usuário já foi cadastrado
-app.get("/Cadastrado", (req, res) => {
-  res.render("pages/jacadastrado", { titulo: "Cadastrado", req: req });
-});
-
-// Página sucesso
-app.get("/sucesso", (req, res) => {
-  res.render("pages/sucesso", { titulo: "Sucesso", req: req });
-});
-
->>>>>>> ab63cf34b937827813e664a6990811a1a24a2d6a
 // POST para login com validação
 app.post(
   "/login",
