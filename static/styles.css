@@ -8,6 +8,7 @@
 
 /* Configuração geral do body e html */
 body, html {
+  min-height: 100vh;
   height: 100%; /* Ocupa 100% da altura da janela */
   display: flex; /* Ativa o Flexbox para alinhar o conteúdo */
   justify-content: center; /* Centraliza horizontalmente */
@@ -206,6 +207,7 @@ p {
 
 .footer {
   position: sticky;
+  top: 100vh;
   background-color: #990000;
   color: white;
   padding: 40px 20px;
@@ -243,3 +245,11 @@ p {
   text-decoration: underline;
 }
 
+table{
+  border: #ff0000;
+  border-collapse: collapse;
+}
+
+td{
+  padding: 5px;
+}
