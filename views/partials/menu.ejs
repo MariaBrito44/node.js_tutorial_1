@@ -1,8 +1,7 @@
 <header>
-<<<<<<< HEAD
     <nav>
-
-       <a href="/sobre">Sobre</a>
+        <a href="/">Inicial</a>
+        <a href="/sobre">Sobre</a>
        <% if (!req.session.loggedin) { %>
        <a href="/cadastro">cadastro</a>
        <a href="/login">Login</a>
@@ -13,18 +12,3 @@
        <% } %>
     </nav>
 </header>
-=======
-     <nav>
-        <a href="/">Index</a>
-        <a href="/sobre">Sobre</a>
-        <% if (!req.session.loggedin) { %>
-        <a href="/cadastro">cadastro</a>
-        <a href="/login">Login</a>
-        <% } else { %>
-        <a href="/dashboard">Dashboard</a>
-        <a href="/logout">Logout</a>
-        <a href="/post_create">Criar postagem</a>
-        <% } %>
-     </nav>
- </header>
->>>>>>> ab63cf34b937827813e664a6990811a1a24a2d6a
