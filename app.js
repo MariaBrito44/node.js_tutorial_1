@@ -1,12 +1,22 @@
 const express = require("express");
 const session = require("express-session");
 const sqlite3 = require("sqlite3");
+const helmet = require("helmet");
+const cors = require("cors");
+const bodyParser = require('body-parser')
 const { body, validationResult } = require("express-validator"); // Biblioteca para validação e sanitização
 
 const app = express();
+app.use(helmet())
+app.use(cors({
+  origin: "https://google.com.br",
+  origin: "https://www.bing.com/"
+}))
+app.use(bodyParser.json({limit: "3mb"}))
 
 // Conexão com o banco de dados SQLite
 const db = new sqlite3.Database("users.db");
+
 
 // Criação das tabelas, caso não existam
 db.serialize(() => {
@@ -40,9 +50,15 @@ app.set("view engine", "ejs");
 
 // Rota principal
 app.get("/", (req, res) => {
-  console.log("GET /");
-  res.render("pages/index", { titulo: "Index", req: req });
-});
+  console.log("GET /")
+  const query = "SELECT * FROM posts";
+    // Busca todos usuários para exibir no dashboard
+    db.all(query, [], (err, rows) => {
+      if (err) return next(err); // Passa erro para o middleware de erro centralizado
+      res.render("pages/index", { titulo: "Index", dados: rows, req: req })
+    })
+  } 
+);
 
 // Rota sobre
 app.get("/sobre", (req, res) => {
@@ -81,46 +97,26 @@ app.get("/post_create", (req, res) => {
 });
 
 // POST para criação de post com validação dos dados
-app.post(
-  "/post_create",
-  [
-    // Validação e sanitização usando express-validator
-    body("titulo").trim().notEmpty().withMessage("Título é obrigatório").escape(),
-    body("conteudo").trim().notEmpty().withMessage("Conteúdo é obrigatório").escape(),
-  ],
-  (req, res, next) => {
+app.post("/post_create",(req,res) => {
     console.log("POST /post_create");
-
-    // Só permite se estiver logado
-    if (!req.session.loggedin) {
-      return res.redirect("/nao_autorizado");
+    //Pegar dados da postagem: User ID, Título Postagem, Conteúdo da Postagem
+    //req.session.username req.session.id_username
+    if(req.session.loggedin){
+        console.log("Dados da postagem: ", req.body)
+        const {titulo,conteudo} = req.body;
+        console.log("Username: ", req.session.username, " id_username: ",req.session.id_username)
+        const data_criacao = new Date();
+        const data = data_criacao.toLocaleDateString();
+        const query = "INSERT INTO posts (id_users, titulo, conteudo, data_criacao) VALUES (?,?,?,?)"
+        db.get(query, [req.session.id_username,titulo,conteudo,data], (err)=>{
+            if(err) throw err;
+            res.redirect('/');
+        })
+        //res.send("Criação da postagem.. Em construção..")
+    }else{
+        res.redirect("/nao_autorizado")
     }
-
-    // Pega erros da validação
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      // Se tem erros, reexibe o formulário com mensagens e valores preenchidos
-      return res.render("pages/post_form", {
-        titulo: "Criar postagem",
-        req: req,
-        errors: errors.array(),
-        data: req.body,
-      });
-    }
-
-    // Se tudo ok, insere no banco de dados
-    const { titulo, conteudo } = req.body;
-    const data_criacao = new Date().toISOString();
-
-    const query = "INSERT INTO posts (id_users, titulo, conteudo, data_criacao) VALUES (?, ?, ?, ?)";
-
-    // Use db.run para insert, e o callback para capturar erro ou sucesso
-    db.run(query, [req.session.id_username, titulo, conteudo, data_criacao], (err) => {
-      if (err) return next(err); // Passa erro para middleware de erro
-      res.send("Post criado com sucesso!");
-    });
-  }
-);
+});
 
 // Rota logout — destrói sessão e redireciona
 app.get("/logout", (req, res) => {
@@ -257,7 +253,7 @@ app.use((req, res) => {
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(err.status || 500);
-  res.render("pages/error", {
+  res.render("pages/fail", {
     titulo: "Erro",
     mensagem: err.message || "Erro interno do servidor",
     req: req,
