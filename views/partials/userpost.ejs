@@ -1,0 +1,19 @@
+<% console.log(JSON.stringify(dados)) %>
+<table border="1px">
+    <thead>
+        <tr>
+            <td>Título</td>
+            <td>Conteúdo</td>
+            <td>Data de criação</td>
+        </tr>
+    </thead>
+    <tbody>
+        <% let i;for(i = 0;i< dados.length; i++) { %>
+        <tr>
+            <td><%= dados[i].titulo %></td>
+            <td><%= dados[i].conteudo %></td>
+            <td><%= dados[i].data_criacao %></td>
+        </tr>
+        <% } %>
+    </tbody>
+</table>

@@ -1,7 +1,7 @@
 <header>
     <nav>
-       <a href="/">Index</a>
-       <a href="/sobre">Sobre</a>
+        <a href="/">Inicial</a>
+        <a href="/sobre">Sobre</a>
        <% if (!req.session.loggedin) { %>
        <a href="/cadastro">cadastro</a>
        <a href="/login">Login</a>
@@ -9,9 +9,6 @@
        <a href="/dashboard">Dashboard</a>
        <a href="/logout">Logout</a>
        <a href="/post_create">Criar postagem</a>
-       <a href="/posts">Posts</a>
-
-
        <% } %>
     </nav>
 </header>
