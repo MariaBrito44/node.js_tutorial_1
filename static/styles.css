@@ -184,3 +184,48 @@ footer {
   font-size: 14px; /* Tamanho pequeno */
   color: #555; /* Cor cinza escura */
 }
+
+/* --- PAGINAÇÃO --- */
+/* Estilo da paginação */
+.pagination {
+  display: flex;
+  justify-content: center; /* centraliza os botões */
+  gap: 12px; /* espaço entre os números */
+  margin-top: 24px; /* espaço acima da paginação */
+  flex-wrap: wrap; /* permite quebra de linha se for muitos números */
+}
+
+.pagination a,
+.pagination strong {
+  padding: 10px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  min-width: 40px;
+  text-align: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Links de página (não selecionados) */
+.pagination a {
+  background-color: #eee;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+/* Efeito hover nos links */
+.pagination a:hover {
+  background-color: #800000;
+  color: white;
+  border-color: #660000;
+  cursor: pointer;
+}
+
+/* Página atual destacada */
+.pagination strong {
+  background-color: #800000;
+  color: white;
+  border: 1px solid #660000;
+  cursor: default;
+}

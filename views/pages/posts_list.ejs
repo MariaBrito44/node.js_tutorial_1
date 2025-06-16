@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title><%= titulo %></title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="/">Index</a>
+    <a href="/sobre">Sobre</a>
+    <% if (!req.session.loggedin) { %>
+      <a href="/cadastro">Cadastro</a>
+      <a href="/login">Login</a>
+    <% } else { %>
+      <a href="/dashboard">Dashboard</a>
+      <a href="/logout">Logout</a>
+      <a href="/post_create">Criar postagem</a>
+      <a href="/posts">Posts</a>
+    <% } %>
+  </nav>
+</header>
+
+<main>
+  <h1><%= titulo %></h1>
+
+  <% if (posts.length === 0) { %>
+    <p>Nenhum post encontrado.</p>
+  <% } else { %>
+    <ul>
+      <% posts.forEach(post => { %>
+        <li class="post-item">
+          <h2><%= post.titulo %></h2>
+          <p><%= post.conteudo %></p>
+          <small>Criado em: <%= new Date(post.data_criacao).toLocaleString('pt-BR') %></small>
+        </li>
+      <% }) %>
+    </ul>
+
+    <!-- Paginação -->
+    <nav class="pagination">
+      <% if (currentPage > 1) { %>
+        <a href="/posts?page=<%= currentPage - 1 %>">&laquo; Anterior</a>
+      <% } %>
+
+      <% for(let i = 1; i <= totalPages; i++) { %>
+        <% if (i === currentPage) { %>
+          <strong><%= i %></strong>
+        <% } else { %>
+          <a href="/posts?page=<%= i %>"><%= i %></a>
+        <% } %>
+      <% } %>
+
+      <% if (currentPage < totalPages) { %>
+        <a href="/posts?page=<%= currentPage + 1 %>">Próximo &raquo;</a>
+      <% } %>
+    </nav>
+  <% } %>
+</main>
+
+</body>
+</html>
