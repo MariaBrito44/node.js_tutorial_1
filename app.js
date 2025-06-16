@@ -56,11 +56,11 @@ app.set("view engine", "ejs");
 // ---------- ROTAS ---------- //
 
 // Página inicial — exibe posts
-app.get("/", (req, res, next) => {
+app.get("/", (req, res) => {
   console.log("GET /");
   const query = "SELECT * FROM posts";
   db.all(query, [], (err, rows) => {
-    if (err) return next(err); // Passa erro para middleware de erro
+    if (err) throw(err); // Passa erro para middleware de erro
     res.render("pages/index", { titulo: "Index", dados: rows, req: req });
   });
 });
@@ -71,12 +71,12 @@ app.get("/sobre", (req, res) => {
 });
 
 // Dashboard - acessível apenas a usuários logados
-app.get("/dashboard", (req, res, next) => {
+app.get("/dashboard", (req, res) => {
   console.log("GET /dashboard");
   if (req.session.loggedin) {
     const query = "SELECT * FROM users";
     db.all(query, [], (err, rows) => {
-      if (err) return next(err);
+      if (err) throw(err);
       res.render("pages/dashboard", { titulo: "Dashboard", dados: rows, req: req });
     });
   } else {
@@ -172,24 +172,13 @@ app.get("/cadastro_sucesso", (req, res) => {
 });
 
 // POST de login com validação
-app.post("/login", (req, res, next) => {
+app.post("/login", (req, res) => {
     console.log("POST /login");
-
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.render("pages/login", {
-        titulo: "Login",
-        errors: errors.array(),
-        data: req.body,
-        req: req,
-      });
-    }
-
     const { username, password, perfil } = req.body;
     const query = "SELECT * FROM users WHERE username=? AND password=?";
 
     db.get(query, [username, password], (err, row) => {
-      if (err) return next(err);
+      if (err) throw(err);
 
       if (row) {
         // Login bem-sucedido: armazena dados na sessão
