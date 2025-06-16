@@ -21,7 +21,7 @@ const db = new sqlite3.Database("users.db");
 // Criação das tabelas, caso não existam
 db.serialize(() => {
   db.run(
-    "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT)"
+    "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT, perfil TEXT)"
   );
   db.run(
     "CREATE TABLE IF NOT EXISTS posts (id INTEGER PRIMARY KEY AUTOINCREMENT, id_users INTEGER, titulo TEXT, conteudo TEXT, data_criacao TEXT)"
@@ -164,7 +164,7 @@ app.post(
       });
     }
 
-    const { username, password } = req.body;
+    const { username, password, perfil } = req.body;
 
     const query = "SELECT * FROM users WHERE username=?";
     db.get(query, [username], (err, row) => {
@@ -175,8 +175,8 @@ app.post(
         return res.redirect("/cadastro_invalido");
       }
 
-      const insert = "INSERT INTO users (username, password) VALUES (?, ?)";
-      db.run(insert, [username, password], (err) => {
+      const insert = "INSERT INTO users (username, password, perfil) VALUES (?, ?, 'visualizador')";
+      db.run(insert, [username, password, perfil], (err) => {
         if (err) return next(err);
         console.log(`Usuário: ${username} cadastrado com sucesso.`);
         res.redirect("/cadastro_sucesso");
@@ -215,7 +215,7 @@ app.post(
       });
     }
 
-    const { username, password } = req.body;
+    const { username, password,perfil } = req.body;
     const query = "SELECT * FROM users WHERE username=? AND password=?";
 
     db.get(query, [username, password], (err, row) => {
@@ -224,8 +224,14 @@ app.post(
       if (row) {
         req.session.loggedin = true;
         req.session.username = username;
-        req.session.id_username = row.id;
+        req.session.id = row.id;
+        if(row.perfil == "adm"){
+        req.session.adm = true;
         res.redirect("/dashboard");
+      }else{
+        req.session.adm = false;
+        res.redirect("/");
+      }
       } else {
         res.redirect("/invalido");
       }
